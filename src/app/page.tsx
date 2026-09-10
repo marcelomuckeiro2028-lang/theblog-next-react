@@ -1,8 +1,9 @@
-import { SpinLoader } from '../components/SpinLoder';
 import { Suspense } from 'react';
-import { PostList } from '../components/PostsList';
-
 import { PostFeatured } from '../components/PostFeatured';
+import { PostList } from '../components/PostsList';
+import { SpinLoader } from '../components/SpinLoder';
+
+export const dynamic = 'force-static';
 
 export default async function HomePage() {
   return (

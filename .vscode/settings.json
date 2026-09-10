@@ -1,18 +1,36 @@
 {
+  // ============================================
+  // 1. CONFIGURAÇÕES DE INTERFACE E EDIÇÃO
+  // ============================================
   "window.zoomLevel": 1,
-  "breadcrumbs.enabled": false,
+  "workbench.activityBar.location": "default",
+  "workbench.editor.labelFormat": "short",
+
   "editor.fontSize": 18,
+  "editor.tabSize": 2,
+  "editor.lineNumbers": "off",
+  "editor.glyphMargin": false,
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.wordWrap": "on",
+  "editor.lightbulb.enabled": "on",
+
+  "breadcrumbs.enabled": false,
+  "explorer.compactFolders": false,
+
+  // ============================================
+  // 2. TERMINAL E DEBUG
+  // ============================================
   "debug.console.fontSize": 18,
   "terminal.integrated.fontSize": 18,
-  "editor.glyphMargin": false,
-  "workbench.activityBar.location": "default",
-  "editor.lineNumbers": "off",
-  "files.eol": "\n", // Final de linha sempre será LF
-  "workbench.editor.labelFormat": "short",
-  "editor.tabSize": 2,
-  "explorer.compactFolders": false,
-  "editor.minimap.enabled": false,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.shellIntegration.enabled": true,
 
+  // ============================================
+  // 3. CODE RUNNER
+  // ============================================
   "code-runner.clearPreviousOutput": true,
   "code-runner.runInTerminal": true,
   "code-runner.ignoreSelection": true,
@@ -20,25 +38,174 @@
     "typescript": "clear ; npx tsx"
   },
 
+  // ============================================
+  // 4. TAILWIND CSS
+  // ============================================
   "tailwindCSS.experimental.classRegex": [["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
 
-  // Formatação e lint
+  // ============================================
+  // 5. ESLINT - ERROS VERMELHOS
+  // ============================================
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.format.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.lintTask.enable": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.debug": false,
+
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "resolvePluginsRelativeTo": "."
+  },
+
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  // ============================================
+  // 6. PRETTIER - FORMATADOR PADRÃO
+  // ============================================
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+
+  // ============================================
+  // 7. CODE ACTIONS - AO SALVAR
+  // ============================================
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "never",
-    "source.organizeImports": "never"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.fixAll": "explicit"
   },
+
+  // ============================================
+  // 8. CONFIGURAÇÕES POR LINGUAGEM
+  // ============================================
+
+  // JavaScript
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
   },
+
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
   },
+
+  // TypeScript
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit",
+      "source.addMissingImports": "explicit"
+    }
   },
+
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit",
+      "source.addMissingImports": "explicit"
+    }
+  },
+
+  // JSON
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // Markdown
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // ============================================
+  // 9. TYPESCRIPT - CONFIGURAÇÕES AVANÇADAS
+  // ============================================
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.validate.enable": true,
+  "typescript.disableAutomaticTypeAcquisition": false,
+
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.completeJSDocs": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  "javascript.validate.enable": true,
+
+  // ============================================
+  // 10. ARQUIVOS
+  // ============================================
+  "files.eol": "\n",
+  "files.autoSave": "off",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": false,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // ============================================
+  // 11. AUTO-IMPORTS E SUGESTÕES
+  // ============================================
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
+  "editor.suggestSelection": "first",
+  "editor.inlineSuggest.enabled": true,
+
+  "editor.suggest.showKeywords": true,
+  "editor.suggest.showSnippets": true,
+  "editor.suggest.showClasses": true,
+  "editor.suggest.showFunctions": true,
+  "editor.suggest.showVariables": true,
+  "editor.suggest.showModules": true,
+
+  // ============================================
+  // 12. CORES PERSONALIZADAS
+  // ============================================
+  "workbench.colorCustomizations": {
+    "editorError.foreground": "#ff0000",
+    "editorError.border": "#ff0000",
+    "editorWarning.foreground": "#ffcc00",
+    "editorWarning.border": "#ffcc00",
+    "editorInfo.foreground": "#00aaff",
+    "editorInfo.border": "#00aaff"
   }
 }

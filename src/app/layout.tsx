@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import { ToastContainer } from 'react-toastify';
+import { MenuAdmin } from '../components/admin/MenuAdmin';
 import { Container } from '../components/Container';
-import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: {
@@ -23,9 +25,12 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       <body className='min-h-full flex flex-col'>
         <Container>
           <Header />
+          <MenuAdmin />
           {children}
           <Footer />
         </Container>
+
+        <ToastContainer />
       </body>
     </html>
   );

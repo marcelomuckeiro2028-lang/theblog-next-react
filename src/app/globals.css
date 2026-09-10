@@ -6,3 +6,24 @@
     background-color: rgb(225, 225, 109);
   }
 }
+
+/* ===== Override do @uiw/react-md-editor ===== */
+.w-md-editor,
+.w-md-editor-content,
+.w-md-editor-text,
+.w-md-editor-text-pre,
+.w-md-editor-text-input,
+.w-md-editor-preview {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.w-md-editor-toolbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+
+.w-md-editor {
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: none !important;
+}

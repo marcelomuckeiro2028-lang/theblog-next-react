@@ -1,8 +1,10 @@
-import { SinglePost } from '@/src/components/SinglePost';
-import { SpinLoader } from '@/src/components/SpinLoder';
-import { findPostBySlugCached } from '@/src/lib/post/queries';
+import { SinglePost } from '../../../components/SinglePost';
+import { SpinLoader } from '../../../components/SpinLoder';
+import { findPublicPostBySlugCached } from '../../../lib/post/queries/public';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+export const dynamic = 'force-static';
 
 type PostSlugPageProps = {
   params: Promise<{ slug: string }>;
@@ -10,7 +12,7 @@ type PostSlugPageProps = {
 
 export async function generateMetadata({ params }: PostSlugPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await findPostBySlugCached(slug);
+  const post = await findPublicPostBySlugCached(slug);
 
   return {
     title: post.title,
