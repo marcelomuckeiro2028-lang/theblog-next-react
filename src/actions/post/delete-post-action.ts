@@ -1,18 +1,17 @@
 'use server';
 
-import { eq } from 'drizzle-orm';
-import { drizzleDb } from '../../db/drizzle';
-import { postsTable } from '../../db/drizzle/schemas';
-import { postRepository } from '../../repositories/post';
-import { asyncDelay } from '../../utils/async-delay';
-import { logColor } from '../../utils/log-color';
 import { revalidateTag } from 'next/cache';
+
+import { postRepository } from '../../repositories/post';
+import { logColor } from '../../utils/log-color';
+
+import type { PostModel } from '../../models/post/post-model';
 
 export async function deletePostAction(id: string) {
   // TODO: checar login do usuário
 
   // TODO: REMOVER LINHAS ABAIXO
-  asyncDelay(2000);
+
   logColor('' + id);
 
   if (!id || typeof id !== 'string') {
@@ -21,17 +20,17 @@ export async function deletePostAction(id: string) {
     };
   }
 
-  const post = await postRepository.findById(id).catch(() => undefined);
+  let post: PostModel;
 
-  if (!post) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    post = await postRepository.delete(id);
+  } catch (e: unknown) {
     return {
-      error: 'Post não existe',
+      success: false,
+      error: e instanceof Error ? e.message : 'Erro desconhecido',
     };
   }
-
-  // TODO: mover este mẽtodo para o repósitorio
-  await drizzleDb.delete(postsTable).where(eq(postsTable.id, id));
-
   // TODO: revalidateTag ou revalidatePath
   revalidateTag('posts');
   revalidateTag(`post-${post.slug}`);

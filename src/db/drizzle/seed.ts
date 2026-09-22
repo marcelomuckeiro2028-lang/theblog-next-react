@@ -1,14 +1,20 @@
 import { JsonPostRepository } from '../../repositories/post/json-post-repository';
-import { drizzleDb } from '.';
+
 import { postsTable } from './schemas';
 
-(async () => {
+import { drizzleDb } from '.';
+
+void (async () => {
   const jsonPostRepository = new JsonPostRepository();
   const posts = await jsonPostRepository.findAll();
 
   try {
-    await drizzleDb.delete(postsTable); // Isso limpa a base de dados
-    await drizzleDb.insert(postsTable).values(posts);
+    await drizzleDb.transaction(async objTransaction => {
+      await objTransaction.delete(postsTable); // Isso limpa a base de dados
+      if (posts.length > 0) {
+        await objTransaction.insert(postsTable).values(posts);
+      }
+    });
 
     console.log();
     console.log(`${posts.length} posts foram salvos na base de dados.`);
@@ -19,5 +25,7 @@ import { postsTable } from './schemas';
     console.log();
     console.log(e);
     console.log();
+
+    process.exit(1);
   }
 })();

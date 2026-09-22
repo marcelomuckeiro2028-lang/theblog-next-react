@@ -1,8 +1,9 @@
+import { type Metadata } from 'next';
+import { Suspense } from 'react';
+
 import { SinglePost } from '../../../components/SinglePost';
 import { SpinLoader } from '../../../components/SpinLoder';
 import { findPublicPostBySlugCached } from '../../../lib/post/queries/public';
-import { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const dynamic = 'force-static';
 

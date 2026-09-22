@@ -1,12 +1,19 @@
 import { ManagePostForm } from '../../../../components/admin/ManagePostform';
 
+import type { Metadata } from 'next';
+
 export const dynamic = 'force-dynamic';
 
+export const metadata: Metadata = {
+  title: 'Criar um post',
+};
+
+// eslint-disable-next-line @typescript-eslint/require-await
 export default async function AdminPostNewPage() {
   return (
-    <>
-      <h1>Criar post</h1>
-      <ManagePostForm />
-    </>
+    <div className='flex flex-col gap-6'>
+      <h1 className='text-xl font-extrabold'>Criar post</h1>
+      <ManagePostForm mode='create' />
+    </div>
   );
 }

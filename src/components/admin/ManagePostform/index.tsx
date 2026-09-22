@@ -1,57 +1,156 @@
 'use client';
 
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useActionState, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { createPostAction } from '../../../actions/post/create-post-action';
+import { updatePostAction } from '../../../actions/post/update-post-action';
+import { makePartialPublicPost, type PublicPost } from '../../../dto/post/dto';
 import { Button } from '../../Button';
 import { InputCheckbox } from '../../InputCheckBox';
 import { InputText } from '../../InputText';
 import { MarkdownEditor } from '../../MarkdownEditor';
 import { ImageUploader } from '../ImageUploader';
 
-export function ManagePostForm() {
-  const [contentValue, setContentValue] = useState('');
+type ManagePostFormUpdateProps = {
+  mode: 'update';
+  publicPost: PublicPost;
+};
+
+type ManagePostFormCreateProps = {
+  mode: 'create';
+};
+type ManagePostFormProps = ManagePostFormUpdateProps | ManagePostFormCreateProps;
+export function ManagePostForm(props: ManagePostFormProps) {
+  const { mode } = props;
+  const searchParams = useSearchParams();
+  const created = searchParams.get('created');
+  const router = useRouter();
+
+  let publicPost: PublicPost | undefined;
+
+  if (mode === 'update') {
+    publicPost = props.publicPost;
+  }
+
+  const actionsMap = {
+    update: updatePostAction,
+    create: createPostAction,
+  };
+  const initialState = {
+    formState: makePartialPublicPost(publicPost),
+    errors: [],
+  };
+
+  const [state, action, isPending] = useActionState(actionsMap[mode], initialState);
+
+  useEffect(() => {
+    if (state.errors.length > 0) {
+      toast.dismiss();
+      state.errors.forEach(error => toast.error(error));
+    }
+  }, [state.errors]);
+
+  useEffect(() => {
+    if (state.success) {
+      toast.dismiss();
+      toast.success('Post atualizado com sucesso!');
+    }
+  }, [state.success]);
+
+  useEffect(() => {
+    if (created === '1') {
+      toast.dismiss();
+      toast.success('Post criado com sucesso!');
+      const url = new URL(window.location.href); // Pegar a url da página atual
+      url.searchParams.delete('created');
+      router.replace(url.toString());
+    }
+  }, [created, router]);
+
+  const { formState } = state;
+  const [contentValue, setContentValue] = useState(publicPost?.content || '');
   return (
-    <form action=''>
+    <form action={action} className='mb-16'>
       <div className='flex flex-col gap-6'>
-        <InputText labelText='Nome' placeholder='Digite seu nome' />
-
-        <ImageUploader />
-
-        <InputText labelText='Sobrenome' placeholder='Digite seu sobrenome' />
-
-        <InputCheckbox labelText='Sobrenome' />
+        <InputText
+          labelText='ID'
+          name='id'
+          placeholder='Id gerado automaticamente'
+          type='text'
+          defaultValue={formState.id}
+          disabled={isPending}
+          readOnly
+        />
 
         <InputText
-          disabled
-          labelText='Input'
-          placeholder='Input desativado'
-          defaultValue='Hello world!!!'
+          labelText='SLUG'
+          name='slug'
+          placeholder='Slug gerado automaticamente'
+          type='text'
+          defaultValue={formState.slug}
+          disabled={isPending}
+          readOnly
+        />
+
+        <InputText
+          labelText='AUTHOR'
+          name='author'
+          placeholder='Digite o nome do author'
+          type='text'
+          defaultValue={formState.author}
+          disabled={isPending}
+        />
+
+        <InputText
+          labelText='TITLE'
+          name='title'
+          placeholder='Digite o title '
+          type='text'
+          defaultValue={formState.title}
+          disabled={isPending}
+        />
+
+        <InputText
+          labelText='EXCERPT'
+          name='excerpt'
+          placeholder='Digite o resumo'
+          type='text'
+          defaultValue={formState.excerpt}
+          disabled={isPending}
         />
 
         <MarkdownEditor
           labelText='Conteúdo'
-          disabled={false}
-          textAreaName='content'
           value={contentValue}
           setValue={setContentValue}
+          textAreaName='content'
+          disabled={isPending}
         />
 
-        <InputText
-          disabled
-          labelText='Input'
-          placeholder='Input desativado'
-          defaultValue='Hello world!!!'
-        />
+        <ImageUploader disabled={isPending} />
 
         <InputText
-          labelText='Input'
-          placeholder='Input desativado'
-          defaultValue='Hello world!!!'
-          readOnly
+          labelText='URL da imagem de capa'
+          name='coverImageUrl'
+          placeholder='Digite a url da imagem'
+          type='text'
+          defaultValue={formState.coverImageUrl}
+          disabled={isPending}
+        />
+
+        <InputCheckbox
+          labelText='Publicar?'
+          name='published'
+          type='checkbox'
+          defaultChecked={formState.published}
+          disabled={isPending}
         />
       </div>
 
       <div>
-        <Button type='submit' size='md' className='w-full mt-8'>
+        <Button disabled={isPending} type='submit' size='md' className='w-full mt-8'>
           Enviar
         </Button>
       </div>

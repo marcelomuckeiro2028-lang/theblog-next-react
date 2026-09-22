@@ -1,0 +1,6 @@
+// Criar updatePostAction e ajustar o form
+// Adicionar tipagem condicional no form para prevenir erros
+// Mensagem ao atualizar um post com success (estado)
+// Mensagem ao criar um post com searchParams
+// Usar isPending para desativar todos os campos
+// ImageUploader Disable

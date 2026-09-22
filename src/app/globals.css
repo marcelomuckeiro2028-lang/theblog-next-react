@@ -8,22 +8,39 @@
 }
 
 /* ===== Override do @uiw/react-md-editor ===== */
+/* Garante fundo branco e cor base preta para o editor e preview */
 .w-md-editor,
 .w-md-editor-content,
 .w-md-editor-text,
 .w-md-editor-text-pre,
-.w-md-editor-text-input,
 .w-md-editor-preview {
   background-color: #ffffff !important;
   color: #000000 !important;
 }
 
+/* Ajustes da toolbar */
 .w-md-editor-toolbar {
   background-color: #ffffff !important;
   border-bottom: 1px solid #e5e5e5 !important;
 }
 
+/* Borda do container */
 .w-md-editor {
   border: 1px solid #e5e5e5 !important;
   box-shadow: none !important;
+}
+
+/* ===== CAMADA DE INPUT (TEXTAREA INVISÍVEL) ===== */
+/* Não força cor preta aqui para não cobrir o highlight do Prism */
+.w-md-editor-text-input {
+  /* Mantém o textarea transparente para que o highlight apareça */
+  -webkit-text-fill-color: transparent !important;
+  background-color: transparent !important;
+  caret-color: #000000 !important; /* Cursor preto visível */
+}
+
+/* Garante que os spans de highlight não tenham fundo indesejado */
+.w-md-editor-text-pre > code,
+.w-md-editor-text-pre > code > span {
+  background-color: transparent !important;
 }

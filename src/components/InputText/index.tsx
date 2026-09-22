@@ -21,7 +21,7 @@ export function InputText({ labelText = '', ...props }: InputTextProps) {
           'bg-white outline-0',
           'ring-2 ring-slate-400 rounded',
           'p-2 transition focus:ring-blue-600',
-          'placeholder-slate-300',
+          'placeholder:text-slate-450',
           'disabled:bg-slate-200',
           'disabled:text-slate-400',
           'disabled:placeholder-slate-500',

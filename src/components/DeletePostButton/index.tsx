@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { toast } from 'react-toastify';
+
 import { deletePostAction } from '../../actions/post/delete-post-action';
 import { Dialog } from '../Dialog';
 

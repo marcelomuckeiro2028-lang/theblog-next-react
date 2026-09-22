@@ -1,7 +1,8 @@
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import { Suspense } from 'react';
-import { SpinLoader } from '../../../components/SpinLoder';
+
 import PostsListAdmin from '../../../actions/PostsListAdmin';
+import { SpinLoader } from '../../../components/SpinLoder';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Post Admin',
 };
 
-export default async function AdminPostPage() {
+export default function AdminPostPage() {
   return (
     <Suspense fallback={<SpinLoader className='mb-16' />}>
       <PostsListAdmin />

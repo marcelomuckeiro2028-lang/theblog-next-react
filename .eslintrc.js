@@ -1,4 +1,3 @@
-/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
 
@@ -35,7 +34,8 @@ module.exports = {
         usePrettierrc: true,
       },
     ],
-
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'error',
     // TypeScript - Essas regras aparecem em VERMELHO
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -105,6 +105,7 @@ module.exports = {
     '*.test.tsx',
     '*.spec.ts',
     '*.spec.tsx',
+    '.eslintrc.js',
   ],
 
   // Settings

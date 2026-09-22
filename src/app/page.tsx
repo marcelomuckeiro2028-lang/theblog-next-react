@@ -1,11 +1,12 @@
 import { Suspense } from 'react';
+
 import { PostFeatured } from '../components/PostFeatured';
 import { PostList } from '../components/PostsList';
 import { SpinLoader } from '../components/SpinLoder';
 
 export const dynamic = 'force-static';
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <>
       <Suspense fallback={<SpinLoader className='min-h-20 mb-16' />}>

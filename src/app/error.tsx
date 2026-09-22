@@ -1,7 +1,8 @@
 'use client';
 
-import ErrorMessage from '../components/ErrorMessage';
 import { useEffect } from 'react';
+
+import ErrorMessage from '../components/ErrorMessage';
 
 type RootErrorPageProps = {
   error: Error;

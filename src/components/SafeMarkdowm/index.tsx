@@ -1,7 +1,7 @@
-import remarkGfm from 'remark-gfm';
+import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
-import clsx from 'clsx';
+import remarkGfm from 'remark-gfm';
 
 type SafeMarkdownProps = {
   markdown: string;

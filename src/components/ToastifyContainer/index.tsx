@@ -1,7 +1,6 @@
 'use client';
 
 import { Bounce, ToastContainer } from 'react-toastify';
-import { postRepository } from '../../repositories/post/index';
 
 export function ToastifyContainer() {
   return (
