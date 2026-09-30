@@ -2,6 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
+import { verifyLoginSession } from '../../lib/login/manager-login';
 import { postRepository } from '../../repositories/post';
 import { logColor } from '../../utils/log-color';
 
@@ -9,6 +10,13 @@ import type { PostModel } from '../../models/post/post-model';
 
 export async function deletePostAction(id: string) {
   // TODO: checar login do usuário
+  const isAuthenticated = await verifyLoginSession();
+
+  if (!isAuthenticated) {
+    return {
+      error: 'Faça login novamente em outra aba',
+    };
+  }
 
   // TODO: REMOVER LINHAS ABAIXO
 

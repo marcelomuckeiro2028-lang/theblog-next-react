@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { v4 as uuidV4 } from 'uuid';
 
 import { makePartialPublicPost, type PublicPost } from '../../dto/post/dto';
+import { verifyLoginSession } from '../../lib/login/manager-login';
 import { PostCreateSchema } from '../../lib/post/validation';
 import { postRepository } from '../../repositories/post';
 import { asyncDelay } from '../../utils/async-delay';
@@ -22,8 +23,7 @@ export async function createPostAction(
   formData: FormData,
 ): Promise<CreatePostActionProps> {
   // TODO: Verificar se o usuário está logado
-
-  await asyncDelay(3000);
+  const isAuthenticated = await verifyLoginSession();
 
   if (!(formData instanceof FormData)) {
     return {
@@ -32,8 +32,17 @@ export async function createPostAction(
     };
   }
 
+  await asyncDelay(3000);
+
   const formDataObj = Object.fromEntries(formData.entries());
   const zodParsedObj = PostCreateSchema.safeParse(formDataObj);
+
+  if (!isAuthenticated) {
+    return {
+      formState: makePartialPublicPost(formDataObj),
+      errors: ['Faça login em outra aba antes de salvar'],
+    };
+  }
 
   if (!zodParsedObj.success) {
     const errors = getZodErrorMessages(zodParsedObj.error.format());
